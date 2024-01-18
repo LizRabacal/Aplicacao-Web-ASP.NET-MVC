@@ -1,0 +1,218 @@
+CREATE DATABASE EmpresaRabanete;
+USE EmpresaRabanete;
+
+CREATE TABLE Funcionario (
+    ID_FUNC int auto_increment primary key,
+    NOME_FUNC varchar(60) not null,
+    CARGO varchar(30),
+    SALARIO float,
+    DATA_ADMISSAO date,
+    TELEFONE varchar(22)
+);
+
+insert into Funcionario(NOME_FUNC, CARGO, SALARIO, DATA_ADMISSAO, TELEFONE)
+                      values('Clara Almeida de Jesus', 'Gerente', 3.500, curdate(), '(71)99783-2893'),
+                            ('Rodrigo Sales Santos', 'Auxiliar de Limpeza', 1.320, curdate(), '(71)98734-1363'),
+       ('Luis Araújo Elias', 'Auziliar Administrativo', 2.300, curdate(), '(71)98353-5638'),
+       ('Alana Silva Anjos', 'Comerciáriao', 1.780, curdate(), '(71)98123-7641');
+
+CREATE TABLE Cliente (
+    ID_CLIENTE int auto_increment primary key,
+    NOME_CLI varchar(60) not null,
+    TELEFONE varchar(22),
+    ENDERECO varchar(100)
+);
+
+insert into Cliente(NOME_CLI, TELEFONE, ENDERECO)
+                      values('Marcelo Matos de Lima', '(71)99783-2893','Rua Maria da Paz,161-Piatã, Salvador/BA'),
+                            ('Larissa Alves dos Santos','(71)98523-7643','Rua Glória Maria,27-Engomadeira,Candeias/BA'),
+                            ('Jessica Lorenzo Anjos', '(71)99162-1539','Rua São Francisco,98-Uruguai,Salvador/BA'),
+                            ('Carlos Emanuel Santório', '(71)98512-7646','Rua Lar Doce Lar,32-Bairro da Paz,Salvador/BA');
+SELECT * FROM Cliente;
+
+CREATE TABLE Produto (
+    ID_PRODUTO int auto_increment primary key,
+    NOME_PRODUTO varchar(100) not null,
+    DESCRICAO varchar(255),
+    PRECO float,
+    ESTOQUE int
+);
+
+insert into Produto(NOME_PRODUTO, DESCRICAO, PRECO, ESTOQUE)
+                      values('Samsung s23 256gb 6GB RAM','Smartphone', 4.099, 200),
+                            ('Notebook Acer Intel Core i5 256GB SSD 8GB RAM', 'Notebook', 3.099, 130),
+                            ('Apple Iphone 13 128GB','Smartphone', 4.250, 320),
+                            ('Samsung s20 128gb 6GB RAM',"Smartphone", 1.946, 87);
+SELECT * FROM Produto;
+
+CREATE TABLE Venda (
+    ID_VENDA int auto_increment primary key,
+    DATA_VENDA date,
+    ID_CLIENTE int,
+    DESCONTO float,
+    TOTAL float,
+    PAGAMENTO_EFETUADO bool default false,
+    FOREIGN KEY (ID_FUNCIONARIO) REFERENCES Funcionario(ID_FUNC),
+    FOREIGN KEY (ID_CLIENTE) REFERENCES Cliente(ID_CLIENTE)
+);
+
+insert into Venda(DATA_VENDA, ID_CLIENTE, DESCONTO, TOTAL)
+                      values("2023-10-22",1,99.00,4.000),
+                            ("2023-10-23",2,299.00, 3.800),
+                            ("2023-11-23",3,250.00,4.000),
+                            ("2023-11-24",4,346.00,1.600);
+
+SELECT * FROM Venda;
+
+create table historicoDepreco (
+id int auto_increment primary key,
+dta datetime,
+ID_PRODUTO_FK int,
+valor_anterior float,
+valor_novo float,
+
+foreign key (ID_PRODUTO_FK) references Produto (ID_PRODUTO)
+);
+
+CREATE TABLE ItensVenda (
+    ID_VENDA int,
+    ID_PRODUTO int,
+    ID_CLIENTE int,
+    QUANTIDADE int,
+    SUBTOTAL float,
+    FOREIGN KEY (ID_VENDA) REFERENCES Venda(ID_VENDA),
+    FOREIGN KEY (ID_CLIENTE) REFERENCES cliente(ID_CLIENTE),
+    FOREIGN KEY (ID_PRODUTO) REFERENCES Produto(ID_PRODUTO)
+);
+
+insert into ItensVenda(ID_VENDA, ID_PRODUTO, QUANTIDADE, SUBTOTAL, ID_CLIENTE)
+                      values(1,1,1,4.099, 1),
+                            (2,2,1, 3.099, 1),
+                            (3,3,1,4.250), 1,
+                            (4,4,1,1.946, 1);
+                           
+SELECT * FROM ItensVenda;    
+                       
+CREATE TABLE Servico (
+    ID_SERVICO int auto_increment primary key,
+    DESCRICAO_SERVICO varchar(100) not null,
+    VALOR float,
+    DATA_SERVICO date
+);
+
+insert into Servico(DESCRICAO_SERVICO, VALOR, DATA_SERVICO)
+                      values("Venda Smartphone",4.099,"2023-10-22"),
+                            ("Venda Notebook",3.099,"2023-10-23"),
+                            ("Venda Smartphone",4.250,"2023-11-23"),
+                            ("Venda Smartphone",1.946,"2023-11-24");
+                           
+SELECT * FROM Servico;
+
+SELECT * FROM Funcionario ORDER BY NOME_FUNC ASC;
+SELECT * FROM Funcionario ORDER BY NOME_FUNC DESC;
+
+SELECT ID_FUNCIONARIO, SUM(TOTAL) AS TOTAL_VENDAS
+FROM Venda
+GROUP BY ID_FUNCIONARIO;
+
+SELECT *
+FROM Venda
+WHERE DATA_VENDA BETWEEN '2023-10-01' AND '2023-10-31';
+
+SELECT *
+FROM Venda
+WHERE ID_FUNCIONARIO IN (1, 4);
+
+CREATE VIEW dtv AS
+SELECT 'Cliente' AS Tipo, ID_CLIENTE AS ID, NOME_CLI AS Nome, EMAIL, TELEFONE, ENDERECO
+FROM Cliente
+
+UNION
+
+SELECT 'Funcionario' AS Tipo, ID_FUNC AS ID, NOME_FUNC AS Nome, NULL AS EMAIL, TELEFONE, NULL AS ENDERECO
+FROM Funcionario;
+SELECT * FROM dtv;
+
+
+
+DELIMITER //
+CREATE TRIGGER tr_update_subtotal BEFORE UPDATE ON itensvenda
+FOR EACH ROW
+BEGIN
+    -- Recalcula o SUBTOTAL antes da atualização da linha
+    SET NEW.SUBTOTAL = NEW.QUANTIDADE * (
+        SELECT PRECO FROM produto WHERE ID_PRODUTO = NEW.ID_PRODUTO
+    );
+END;
+//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER tr_update_total AFTER UPDATE ON itensvenda
+FOR EACH ROW
+BEGIN
+    -- Atualiza o TOTAL na tabela Venda após uma atualização em ItensVenda
+    UPDATE Venda
+    SET TOTAL = COALESCE(
+        (SELECT SUM(SUBTOTAL) 
+        FROM ItensVenda 
+        WHERE ID_VENDA = NEW.ID_VENDA), 0)
+    WHERE ID_VENDA = NEW.ID_VENDA;
+END;
+//
+DELIMITER ;
+
+
+
+DELIMITER //
+CREATE TRIGGER tr_update_total_after_delete AFTER DELETE ON itensvenda
+FOR EACH ROW
+BEGIN
+    -- Atualiza o TOTAL na tabela Venda após uma exclusão em ItensVenda
+    UPDATE Venda
+    SET TOTAL = COALESCE(
+        (SELECT SUM(SUBTOTAL) 
+        FROM ItensVenda 
+        WHERE ID_VENDA = OLD.ID_VENDA), 0)
+    WHERE ID_VENDA = OLD.ID_VENDA;
+END;
+//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER trg_after_insert_itensvenda
+BEFORE INSERT ON ItensVenda FOR EACH ROW
+BEGIN
+    DECLARE v_id_venda INT;
+
+    -- Verifica se já existe uma venda não paga para o cliente
+    SELECT ID_VENDA INTO v_id_venda
+    FROM Venda
+    WHERE ID_CLIENTE = NEW.ID_CLIENTE AND PAGAMENTO_EFETUADO = false
+    LIMIT 1;
+
+    IF v_id_venda IS NULL THEN
+        -- Insere na tabela Venda
+        INSERT INTO Venda (DATA_VENDA, ID_CLIENTE, DESCONTO, TOTAL)
+        VALUES (NOW(), NEW.ID_CLIENTE, 0, NEW.SUBTOTAL);
+
+        -- Obtém o ID_VENDA gerado na inserção anterior
+        SET v_id_venda = LAST_INSERT_ID();
+
+        -- Atualiza o ID_VENDA na tabela ItensVenda
+        SET NEW.ID_VENDA = v_id_venda;
+    ELSE 
+        -- Atualiza o ID_VENDA na tabela ItensVenda
+        SET NEW.ID_VENDA = v_id_venda;
+
+        -- Atualiza o TOTAL na tabela Venda
+        UPDATE Venda
+        SET TOTAL = TOTAL + NEW.SUBTOTAL
+        WHERE ID_VENDA = v_id_venda;
+    END IF;
+END;
+//
+DELIMITER ;
+

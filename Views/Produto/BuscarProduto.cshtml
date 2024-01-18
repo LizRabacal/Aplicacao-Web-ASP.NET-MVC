@@ -1,0 +1,24 @@
+@model Produto
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<Cliente> UserManager
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultado da Busca</title>
+</head>
+<body>
+    @if (ViewBag.NomeProduto != null)
+    {
+        <h1>@ViewBag.NomeProduto</h1>
+        <input type="hidden" name="ID_PRODUTO" value="@ViewBag.IdProduto">
+        <input type="hidden" name="PRECO" value="@ViewBag.Preco">
+        <input type="hidden" name="idcli" value="@UserManager.GetUserId(User)">
+    }
+    else
+    {
+        <p>Produto não encontrado.</p>
+    }
+</body>
+</html>

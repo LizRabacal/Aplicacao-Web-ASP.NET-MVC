@@ -1,0 +1,33 @@
+@model Funcionario
+
+<link rel="stylesheet" href="~/css/cadastro.css">
+<link rel="stylesheet" href="~/css/login.css">
+<form id="geral" asp-controller="Funcionario" asp-action="Cadastrar">
+    <div id="logo_s">
+        <a href="index.html" id="logo">
+            <img src="~/img/EletroPonto_azul (1).png" alt="">
+            <h1>EletroPonto</h1>
+        </a>
+        <h4>Navegue no Futuro da Tecnologia, Hoje</h4>
+    </div>
+
+    <div id="form">
+        <h5>Nome completo:</h5>
+        <input type="text" asp-for="NOME_FUNC">
+        <h5>Telefone:</h5>
+        <input type="text">
+        <h5>Cargo:</h5>
+        <input type="text" asp-for="CARGO">
+        <h5>Salario:</h5>
+        <input type="text" asp-for="SALARIO">
+        <h5>Data de Admissão:</h5>
+        <input type="date" id="dataAdmissao" name="DATA_ADMISSAO">
+        <h5>Telefone:</h5>
+        <input type="text" asp-for="TELEFONE">
+        <h5>Senha:</h5>
+        <input type="Password">
+        <h5>Confirme a senha:</h5>
+        <input type="Password">
+        <button type="submit">Concluir</button>
+    </div>
+</form>

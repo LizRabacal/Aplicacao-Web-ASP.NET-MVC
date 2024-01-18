@@ -1,0 +1,650 @@
+@model List<ItensVenda>
+@using TRABALHOELETROPONTO.Data;
+@inject ProdutoContext ProdutoContext
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Cliente> SignInManager
+@inject UserManager<Cliente> UserManager
+<link rel="stylesheet" href="~/css/back.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+<div class="dois">
+
+
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">
+            ❅
+        </div>
+        <div class="snowflake">
+            ❅
+        </div>
+        <div class="snowflake">
+            ❆
+        </div>
+        <div class="snowflake">
+            ❄
+        </div>
+        <div class="snowflake">
+            ❅
+        </div>
+        <div class="snowflake">
+            ❆
+        </div>
+        <div class="snowflake">
+            ❄
+        </div>
+        <div class="snowflake">
+            ❅
+        </div>
+        <div class="snowflake">
+            ❆
+        </div>
+        <div class="snowflake">
+            ❄
+        </div>
+    </div>
+    <div class="tudo">
+
+        <div class="caixa1">
+
+            @if (Model.Any())
+            {
+                <div class="removertd">
+                    <form asp-controller="ItensVenda" asp-action="RemoverTodos">
+                        <input type="hidden" name="" value="">
+                        <button type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>Remover tudo</button>
+                    </form>
+                    <div id="desc">
+                        <h3 style="width: 40%;">Produto</h3>
+                        <h3 style="width: 15%;">Qtd.</h3>
+                        <h3 style="width: 10%;">Valor.</h3>
+                        <h3 style="width: 5%;"></h3>
+                    </div>
+                    <hr>
+                </div>
+
+                @foreach (var itemVenda in Model)
+                {
+                    var nomeProduto = ProdutoContext.Produto.Find(itemVenda.ID_PRODUTO)?.NOME_PRODUTO ?? "N/A";
+
+                    <div class="produto">
+
+
+                        <div class="nomeefoto">
+                            <a asp-controller="Produto" asp-action="Detalhes" id="np" asp-route-id="@itemVenda.ID_PRODUTO">@nomeProduto</a>
+                        </div>
+                        <div class="qer">
+                            <div class="qt">
+                                <h5 id="q1">Quant.</h5>
+
+                                <a asp-controller="ItensVenda" asp-action="DecrementarQuantidade"
+                                    asp-route-id="@itemVenda.ID_PRODUTO">
+                                    <h5>-</h5>
+                                </a>
+
+                                <h5>@itemVenda.QUANTIDADE</h5>
+
+                                <a asp-controller="ItensVenda" asp-action="IncrementarQuantidade"
+                                    asp-route-id="@itemVenda.ID_PRODUTO">
+                                    <h5>+</h5>
+                                </a>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="subt">
+                            <h5>R$ @itemVenda.SUBTOTAL.ToString("N2")</h5>
+                        </div>
+
+                        <a id="re" asp-controller="ItensVenda" asp-action="RemoverUm" asp-route-id="@itemVenda.ID_PRODUTO">-</a>
+
+                    </div>
+                    
+                    <hr id="linha">
+                }
+            }
+            else
+            {
+                <div class="Vazio">
+                    <h1>O seu carrinho está vazio.</h1>
+                    <p>Deseja olhar outros produtos similares?</p>
+
+                    <a asp-controller="Home" asp-action="Index"> <svg xmlns="http://www.w3.org/2000/svg" width="26"
+                            height="26" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                            <path
+                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                        </svg> Continuar Comprando </a>
+                </div>
+            }
+        </div>
+
+
+    </div>
+
+    <div class="Resumo">
+        <div class="h5"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                class="bi bi-cash-coin" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0" />
+                <path
+                    d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z" />
+                <path
+                    d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z" />
+                <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z" />
+            </svg>
+            <h6>Resumo do pedido</h6>
+        </div>
+        <div class="total">
+            <p id="name">Valor dos produtos: </p>
+            <p id="d"> R$@CalcularTotal().ToString("N2")</p>
+        </div>
+        <hr>
+        <div class="frete">
+            <p id="name">Frete: </p>
+            <p id="d">R$0,00</p>
+        </div>
+        <div class="two">
+            <div class="tap">
+                <p id="name">Total à prazo</p>
+                <p id="d"> R$@CalcularTotal().ToString("N2")</p>
+
+            </div>
+            <p id="name" class="dez">(em até 10x sem juros)</p>
+        </div>
+        <div class="vav">
+            <p id="v1">Valor à vista no Pix:</p>
+            <p id="vd">R$ @Desconto().ToString("N2")</p>
+            <div class="p" style="display=flex">
+                <p id="v">Economize</p>
+                <p id="desc">30%</p>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a id="cart" href='@Url.Action("Pagamento", "Venda")?idprocurado=@UserManager.GetUserId(User)'>
+                <button id="btn1">IR PARA O PAGAMENTO</button></a>
+            <a asp-controller="Home" asp-action="Index"> <button id="btn2">CONTINUAR COMPRANDO</button></a>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+@functions {
+    decimal CalcularTotal()
+    {
+        return Model.Sum(item => (decimal)item.SUBTOTAL);
+    }
+}
+@functions {
+    decimal
+    Desconto()
+    {
+        return Model.Sum(item => (decimal)item.SUBTOTAL) - Model.Sum(item => (decimal)item.SUBTOTAL) * (decimal)0.3;
+    }
+}
+
+
+<style>
+    .buttons a {
+        text-decoration: none;
+        width: 100%;
+    }
+
+    #produtos {
+        color: black;
+        position: absolute;
+        margin: 25px;
+        top: 0;
+        font-weight: bolder;
+    }
+
+    #produtos svg {
+        color: #3273D1;
+    }
+
+    .Vazio {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .Vazio p {
+        color: black;
+    }
+
+    .Vazio a {
+        border: 2px solid #F3CB43;
+        padding: 13px;
+        width: 50%;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        color: white;
+        background-color: #F3CB43;
+        font-weight: 900;
+        justify-content: space-evenly;
+        border-radius: 4px;
+        transition: 0.3s;
+        margin-top: 20px;
+
+    }
+
+    .Vazio a:hover {
+        opacity: 90%;
+    }
+
+    .h1,
+    h1 {
+        font-size: 2.0rem !important;
+    }
+
+    #re {
+        text-decoration: none;
+        color: red;
+        border: 1px solid red;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: bold;
+
+    }
+
+    .nomeefoto {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 40%;
+    }
+
+    .qt h5 {
+        font-weight: 700;
+    }
+
+    #np {
+        font-size: 15px;
+        color: black;
+        font-weight: bolder;
+        text-decoration: none;
+    }
+
+    #np:hover {
+        text-decoration: underline;
+
+    }
+
+    .subt h5 {
+        font-size: 15px;
+        font-weight: bolder;
+        color: #F3CB43;
+        width: 100%;
+        text-align: center;
+    }
+
+    .subt {
+        width: 15%;
+        text-align: center;
+    }
+
+    .qt h5 {
+        font-size: 15px;
+        margin-top: 3px;
+    }
+
+    .qt {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .h5 {
+        gap: 15px;
+        font-weight: 900;
+        display: flex;
+        margin-bottom: 40px;
+        justify-content: center;
+    }
+
+    #divBusca {
+        display: flex !important;
+    }
+
+    #menu {
+        justify-content: space-between !important;
+    }
+
+    #login {
+        border: 1px solid rgb(118 117 117);
+    }
+
+    .h5 svg {
+        color: #3273D1;
+        margin-right: 5px;
+    }
+
+    #btn1 {
+        background-color: #F3CB43;
+        border: none;
+        height: 35px;
+        font-size: 12px;
+        color: white;
+        font-weight: bolder;
+        transition: 0.3s;
+
+
+    }
+
+    .removertd {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .removertd button {
+        color: red;
+        padding: 4%;
+        width: 100%;
+        border-radius: 4px;
+        background-color: white;
+        font-weight: 800;
+        border: 1px solid red;
+
+    }
+
+    form {
+        width: 25%;
+    }
+
+    .removertd svg {
+        margin-bottom: 4px;
+        margin-right: 10px;
+    }
+
+    h6 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .Resumo button:hover {
+        opacity: 85%;
+    }
+
+    .qt h5 {}
+
+    #btn2 {
+        font-size: 12px;
+        font-weight: bolder;
+        border: 1px solid #F3CB43;
+        color: #F3CB43;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 35px;
+        transition: 0.3s;
+
+
+    }
+
+    .Resumo button {
+        border-radius: 5px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    h5 {
+        font-size: 25px;
+        list-style: none;
+        text-decoration: none;
+        color: black;
+    }
+
+    .Resumo svg {
+        margin-top: 5px;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1%;
+        width: 100%;
+    }
+
+    .p {
+        display: flex;
+    }
+
+    #vd {
+        font-size: 22px;
+        font-weight: bolder;
+
+    }
+
+    #desc {
+        font-size: 12px;
+        font-weight: bolder;
+        margin-top: 3%;
+    }
+
+    #v {
+        font-size: 12px;
+
+    }
+
+    #v1 {
+        font-weight: 0;
+        font-size: 12px;
+
+    }
+
+    .vav {
+        padding: 7%;
+        width: 100%;
+        display: flex;
+        background-color: rgb(229, 255, 241);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(229, 255, 241);
+        color: rgb(31, 144, 80);
+    }
+
+    .vav p {
+        color: rgb(31, 144, 80);
+    }
+
+    .dez {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #name {
+        color: rgb(127, 133, 141);
+        font-size: 14px;
+        font-weight: 0;
+
+    }
+
+    body {}
+
+    #d {
+        color: black;
+        font-weight: 900;
+
+    }
+
+    .total {
+        display: flex;
+        justify-content: space-between;
+        width: 85%;
+    }
+
+    .frete {
+        width: 85%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-content: space-between;
+        flex-direction: row;
+    }
+
+    .tap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-content: space-between;
+        flex-direction: row;
+        width: 88%;
+    }
+
+    .two {
+        background-color: rgb(242, 243, 244);
+        width: 100%;
+        margin-top: 5%;
+        margin-bottom: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 3%;
+    }
+
+    #d {
+        font-weight: 900;
+
+        color: black;
+
+    }
+
+    .Resumo {
+        border-radius: 4px;
+        margin-right: 10px;
+        width: 30%;
+        padding: 3%;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        background-color: rgb(248, 248, 248);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .dois {
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        margin-top: 3%;
+    }
+
+
+    .tudo {
+        border-radius: 5px;
+        background-color: white;
+        position: relative;
+        border: 1px solid #cdcdcd;
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        padding: 3%;
+        align-items: flex-start;
+        width: 60%;
+    }
+
+    #linha {
+        width: 100%;
+        height: 1px;
+    }
+
+    .banner1 {
+        height: 5%;
+        border-radius: 0px 20px 0px 20px;
+        background-color: #3273D1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 2%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        padding-bottom: 2%;
+    }
+
+    .qer {
+        width: 15%;
+    }
+
+    .qt a {
+        list-style: none;
+        text-decoration: none;
+    }
+
+    .produto {
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+        align-content: cent
+    }
+
+    .caixa1 {
+        width: 100%;
+    }
+
+    hr {
+        height: 1px;
+        width: 100%;
+        color: rgb(39 39 39);
+        background-color: rgb(39 39 39);
+    }
+
+    #desc {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    h3 {
+        color: rgb(74, 74, 74);
+        font-size: 14px;
+        line-height: 16px;
+        text-align: center;
+        grid-area: productImage;
+        font-weight: 900;
+    }
+
+    #rel {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 18%;
+        margin-top: 2%;
+    }
+
+    #rel h5{
+        font-size: 14px;
+        color:red;
+    }
+</style>

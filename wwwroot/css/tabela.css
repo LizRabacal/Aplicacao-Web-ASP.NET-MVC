@@ -1,0 +1,23 @@
+.custom-table {
+    white-space: nowrap !important;
+    border: 2px solid #AAA !important;
+    border-radius: 90px !important;
+    width: 78% !important;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+    border-collapse: collapse !important;
+    margin-top: 20px !important;
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 12px !important;
+    text-align: left !important;
+}
+
+.custom-table tr:nth-child(even) {
+    background-color: #fff !important;
+}
+
+.custom-table tr:nth-child(odd) {
+    background-color: #F3CB43 !important;
+}

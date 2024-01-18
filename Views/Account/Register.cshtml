@@ -1,0 +1,177 @@
+@model TRABALHOELETROPONTO.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "CRIAR CONTA";
+}
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+<div class="caixa">
+    <div class="banner1">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+
+    <form asp-action="Register" class="form" method="post">
+
+
+
+
+
+
+        <div class="caixinha1">
+            <div class="input">
+                <label asp-for="Nome"></label>
+                <input asp-for="Nome" type="text" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="input">
+                <label asp-for="Telefone"></label>
+                <input asp-for="Telefone" type="text" class="form-control" />
+                <span asp-validation-for="Telefone" class="text-danger"></span>
+            </div>
+
+        </div>
+
+
+
+
+        <div class="inputemail">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" style="        width: 100%;
+" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="inputend">
+            <label asp-for="Endereco"></label>
+            <input asp-for="Endereco" type="text" class="form-control" />
+            <span asp-validation-for="Endereco" class="text-danger"></span>
+        </div>
+
+
+        <div class="caixinha1">
+
+
+            <div class="input">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="input">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <button type="submit" id="sub" style="margin: 40px; font-weight: 500;" class="btn btn-primary">ENVIAR</button>
+
+    </form>
+
+</div>
+
+
+
+
+<style>
+    body {
+        background: url("/img/painel.png");
+    }
+
+
+
+    .banner1 {
+        height: 45px;
+        border-radius: 0px 20px 0px 20px;
+        background-color: #3273D1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 2%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        padding-bottom: 2%;
+    }
+
+    h2 {
+        color: white;
+        font-weight: bolder;
+        font-size: 18px;
+        margin-left: 4%;
+        margin-top: 10px;
+    }
+
+    #sub {
+        width: 100%;
+    }
+
+    .inputemail input {
+        width: 100% !important;
+    }
+
+    .inputemail {
+        width: 100% !important;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .inputend input {
+        width: 100% !important;
+    }
+
+    .inputend {
+        width: 100% !important;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .caixinha1 {
+        display: flex;
+        gap: 5px;
+    }
+
+
+    .input {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .caixa {
+        border-radius: 0px 20px 0px 20px;
+        background-color: white;
+        opacity: 95%;
+        position: relative;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        margin: 3%;
+    }
+
+    .main {
+        max-width: 100% !important;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        margin: 60px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+    }
+</style>

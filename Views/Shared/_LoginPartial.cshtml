@@ -1,0 +1,113 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Cliente> SignInManager
+@inject UserManager<Cliente> UserManager
+@if (SignInManager.IsSignedIn(User))
+{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <div class="aa">
+
+        <form asp-controller="Account" asp-action="Logout">
+            <button id="btn" type="submit">
+                <i class="fas fa-door-open"></i>
+                <p>Sair</p>
+            </button>
+
+        </form>
+    </div>
+}
+
+else
+
+{
+    <div class="a">
+        <div class="ancoras">
+            <a asp-controller="Account" asp-action="Login">Entre</a>
+            <p>|</p>
+            <a asp-controller="Account" asp-action="Register">Cadastre-se</a>
+
+        </div>
+    </div>
+
+}
+
+<style>
+    #cart {
+        margin-right: 7px;
+    }
+
+    #btn {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        color: rgb(118 117 117);
+        gap: 14px;
+    }
+
+    #btn p {
+        font-weight: bold;
+        color: rgb(118 117 117);
+    }
+
+    .aa {
+        display: flex;
+        width: 30%;
+    }
+
+    #login {
+        left: 83%;
+    }
+
+    .aa p {
+        white-space: nowrap;
+
+    }
+
+    h4 {
+        font-size: 11px;
+        color: white;
+        width: 100%;
+    }
+
+    p {
+        color: rgb(94, 94, 94);
+        margin-right: 5px;
+    }
+
+    .a {
+        white-space: nowrap;
+        display: flex;
+        margin-left: 350px;
+    }
+
+    .a .ancoras {
+        display: flex;
+        margin-bottom: 50%;
+
+    }
+
+    .a a {
+        margin-right: 15px;
+        margin-left: 15px;
+        text-decoration: none;
+        color: rgb(94, 94, 94);
+    }
+
+    .a a:hover {
+        border-bottom: 1px solid rgb(94, 94, 94);
+    }
+
+    .aa button {
+        background-color: transparent;
+        border: none;
+    }
+
+    #menu {
+        justify-content: flex-end;
+    }
+
+    #divBusca {
+        display: none !important;
+    }
+</style>

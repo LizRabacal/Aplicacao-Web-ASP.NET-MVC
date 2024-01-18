@@ -1,0 +1,201 @@
+@model TRABALHOELETROPONTO.Models.LoginViewModel
+@{
+    ViewData["Title"] = "LOGIN";
+}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+<div class="caixa">
+
+    <div id="par1">
+
+        <a asp-controller="Home" asp-action="Index" id="logo1">
+            <img src="~/img/EletroPonto_azul (1).png" alt="">
+            <h2>EletroPonto</h2>
+        </a>
+        <img src="~/img/img.png" alt="">
+    </div>
+    <div id="form">
+
+        <h2>@ViewData["Title"]</h2>
+
+        <form asp-action="Login" class="form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="input">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="input">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="input" width="100%">
+                <div class="form-check">
+                    <input asp-for="RememberMe" class="form-check-input" />
+                    <label class="form-check-label" asp-for="RememberMe">Remember me</label>
+                </div>
+            </div>
+            <button type="submit" width="100%" class="btn btn-primary">ENVIAR</button>
+            <span>Não tem conta? <a asp-controller="Account" asp-action="Register">Cadastre-se</a></span>
+        </form>
+    </div>
+</div>
+
+<style>
+    #sub {
+        width: 100%;
+    }
+
+    .inputemail input {
+        width: 100% !important;
+    }
+
+    .inputemail {
+        width: 100% !important;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .inputend input {
+        width: 100% !important;
+    }
+
+    .inputend {
+        width: 100% !important;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .caixinha1 {
+        display: flex;
+        gap: 5px;
+    }
+
+
+    .input {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .caixa {
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        align-items: center;
+        width: 95%;
+        margin: 3%;
+        justify-content: space-between;
+        background-color: #ffdf74;
+        border-radius: 15px;
+    }
+
+    .caixa img {
+        width: 50%;
+    }
+
+    #form {
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        margin-right: 2%;
+        padding: 10%;
+    }
+
+    #form h2{
+        font-weight: bold;
+        color: #3273D1;
+    }
+
+    .form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form div {
+        width: 100%;
+    }
+
+    .main {
+        max-width: 100% !important;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #logo {
+        list-style: none;
+        text-decoration: none;
+        display: none;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    #logo1 h2 {
+        font-size: x-large;
+    }
+
+    #logo1 {
+        list-style: none;
+        text-decoration: none;
+        display: flex;
+    }
+
+    header {
+        display: none;
+    }
+
+    #header1 {
+        display: none;
+    }
+
+    #par1 {
+        width: 55%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2%;
+        border-radius: 15px 0 0 15px;
+        background-color: #ffdf74;
+    }
+
+    #logo1 {
+        width: 35%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    #logo1 img {
+        width: 40%;
+    }
+
+    #logo1 h2 {
+        font-weight: bold;
+    }
+    span {
+        margin: 4%;
+    }
+
+    span a{
+        list-style: none;
+        text-decoration: none;
+    }
+</style>

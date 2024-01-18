@@ -1,0 +1,107 @@
+@model List<Produto>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="~/css/tabela.css">
+<div class="divizinha">
+    <h1>Produtos</h1>
+    <table class="table custom-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço unitário</th>
+                <th>Estoque</th>
+                <th>Ações</th> <!-- New column for actions -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var produto in Model)
+            {
+                <tr>
+                    <td>
+                        @produto.ID_PRODUTO
+                    </td>
+                    <td>
+                        @produto.NOME_PRODUTO
+                    </td>
+                    <td>
+                        @produto.DESCRICAO
+                    </td>
+                    <td>
+                        @produto.PRECO
+                    </td>
+                    <td>
+                        @produto.ESTOQUE
+                    </td>
+                    <td>
+                        <!-- Edit button -->
+                        <a id="ed" asp-controller="Produto" asp-action="Editar" asp-route-id="@produto.ID_PRODUTO">Editar</a>
+
+
+
+                        <!-- Remove button -->
+                        <a id="re" style="color: red" onclick="return confirm('Você tem certeza de que deseja excluir este item?')"
+                            asp-route-id="@produto.ID_PRODUTO" asp-controller="Produto" asp-action="Remover">     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                                        </svg>Remover</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+<style>
+    #ed{
+        color: #F3CB43;
+    }
+    h1 {
+        color: #F3CB43;
+        font-weight: 700;
+    }
+
+    .divizinha {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 60px;
+    }
+
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+
+        .custom-table {
+        white-space: nowrap !important;
+        border: 2px solid #AAA !important;
+        border-radius: 90px !important;
+        width: 78% !important;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+        border-collapse: collapse !important;
+        margin-top: 20px !important;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        padding: 12px !important;
+        text-align: left !important;
+    }
+
+    .custom-table tr:nth-child(even) {
+        background-color: #fff !important;
+    }
+
+    .custom-table tr:nth-child(odd) {
+        background-color: #F3CB43 !important;
+    }
+
+</style>

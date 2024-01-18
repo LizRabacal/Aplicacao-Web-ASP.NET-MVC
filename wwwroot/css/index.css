@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.w-100{
+    height: 100%;
+}
+
+.carousel-item{
+    height: 20rem;
+}
+
+#geral{
+    width: 90%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carousel{
+    width: 100%;
+}
+
+.menudestaque{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.menudestaque button{
+    background-color: white;
+    border: none;
+    padding: 1%;
+    padding-left: 5%;
+}
+
+#geral{
+    margin-top: 5%;
+}
+
+.menudestaque button:hover{
+    font-weight: bold;
+    color: #3273D1;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-control-next, .carousel-control-prev{
+    width: 10%;
+}
+
+
+.compre a {
+    text-decoration: none;
+    font-size: 15px;
+    color: #F3CB43;
+    font-family: 'poppins';
+    display: flex;
+    margin-top: 4px;
+    align-items: center;
+    font-weight: 900;
+
+}
+
+.compre svg {
+    margin-right: 10px;
+}
+
+.compre {
+    display: flex;
+    background-color: white;
+    width: 80%;
+    padding: 5%;
+    padding-left: 7%;
+    padding-right: 7%;
+    margin-top: 2%;
+    border-radius: 5px;
+    border: 1px solid #F3CB43;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.compre a {
+    color: #F3CB43;
+}
+
+.compre:hover a {
+    color: white;
+}
+
+.compre:hover {
+    background-color: #F3CB43;
+}
+
+
+
+h3 {
+    font-size: 20px;
+    text-align: left;
+    color: white;
+    font-weight: 700;
+    margin-left: 3%;
+}
+
+.osdois {
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    min-width: 70%;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    position: relative;
+
+}
+
+.banner1 {
+    border-radius: 0px 20px 0px 20px;
+    background-color: #3273D1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 2%;
+    width: 100%;
+    padding-bottom: 2%;
+}
+
+.tudo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    margin-top: 3%;
+}
+
+.PRECO {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#produto {
+    font-family: 'Roboto', sans-serif;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    width: 20%;
+    margin: 2%;
+    padding-top: 5%;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-bottom: 3%;
+    border: 0.5px solid #bebebe;
+    height: 85%;
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+#produto img {
+    width: 54%;
+
+}
+
+#descricao {
+    display: flex;
+    width: 100%;
+    margin-top: 10%;
+    justify-content: center;
+    align-items: center;
+}
+
+#descricao h5 {
+    font-family: 'poppins';
+    text-align: center;
+    color: #3273D1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    max-height: 4.375rem;
+    font-size: 0.975rem;
+    line-height: 1.125rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    color: rgb(66, 70, 77);
+    min-height: 3.375rem;
+}
+
+.PRECO h2 {
+    font-size: 26px;
+  white-space: nowrap;
+    color: #ffc400;
+    font-weight: bolder;
+    margin-top: 10%;
+    font-family: 'poppins';
+}
+
+#divBusca{
+    display: flex !important;
+}
+
+#menu{
+    justify-content: space-between !important;
+}
